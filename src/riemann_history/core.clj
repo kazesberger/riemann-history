@@ -3,5 +3,5 @@
 (defn history
   "Just messing around..."
   [event]
-  (str "Called plugin with event service: " (:service event)))
+  (str "harroo, yes this is dog. im on fedora now " (:service event)))
 
