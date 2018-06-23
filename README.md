@@ -2,13 +2,6 @@
 
 A Riemann plugin called riemann-history
 
-## Goals
-
-### PoC
-
-* schedules querying persistence layer (elastic search)
-*
-
 ## Usage
 
 ### Build
@@ -24,7 +17,7 @@ lein uberjar
 1) connect your repl using either 
     1) ```lein repl :connect 127.0.0.1:5558```
     1) ![My image](doc/intellij-remote-repl-config.png "A title")
-1) load riemann-history.core through REPL
+1) (re)load riemann-history.core etc through REPL
 
 ### Add to classpath
 
@@ -51,6 +44,10 @@ export EXTRA_CLASSPATH=<path>/riemann/riemann-0.3.0/plugins/riemann-history-0.1.
 
 ; Expire old events from the index every 5 seconds.
 (periodically-expire 5)
+
+(history/history {:connect "http://localhost:9200" 
+                  :interval 600
+                  :query "/tmp/elasticsearch.json"}
 
 (let [index (default :ttl 120 (index))]
   (streams
