@@ -7,7 +7,6 @@
 
   :dependencies [[cc.qbits/spandex "0.6.2"]
                  [cheshire "5.8.0"]
-                 [tea-time "1.0.0"]
                  [org.clojure/tools.logging "0.4.1"]]
 
   :profiles {:dev {:dependencies [[riemann "0.3.1"]

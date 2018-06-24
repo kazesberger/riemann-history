@@ -48,7 +48,7 @@ export EXTRA_CLASSPATH=<path>/riemann/riemann-0.3.0/plugins/riemann-history-0.1.
 (history/history {:connect "http://localhost:9200" 
                   :url "_search"
                   :interval 600
-                  :query "/tmp/elasticsearch.json"}
+                  :query "/etc/riemann-history/elasticsearch.json"}
 
 (let [index (default :ttl 120 (index))]
   (streams
