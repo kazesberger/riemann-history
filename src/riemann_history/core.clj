@@ -1,7 +1,9 @@
 (ns riemann-history.core)
 
+(defonce db  (atom {}))
+
 (defn history
   "Just messing around..."
   [event]
-  (str "harroo, yes this is dog. im on fedora now " (:service event)))
+  (str "riemann-history: db last-updated on " ((:last-updated @db))))
 

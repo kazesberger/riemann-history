@@ -1,24 +1,12 @@
 (ns riemann-history.elastic
-  (:require [clj-time.core :as t]
-            [clj-time.periodic :refer [periodic-seq]]
+  (:require [riemann-history.core :as core]
             [cheshire.core :as cheshire]
-            [clojure.core.async :as a]
-            [tea-time.core :as tt]
-            [chime :refer :all]))
-
-(let [chimes (chime-ch [(-> 2 t/seconds t/from-now)
-                        (-> 3 t/seconds t/from-now)])]
-  (a/<!! (go-loop []
-                  (when-let [msg (<! chimes)]
-                    (prn "Chiming at:" msg)
-                    (recur)))))
-
-(chime-ch (take 5 (periodic-seq
-                    (t/now)
-                    (-> 5 t/minutes))))
+            [tea-time.core :as tt]))
 
 
-;(def fred-durst (tt/every! 10 2 (bound-fn [] (prn "THAT is a thing"))))
+
+(def fred-durst
+  (tt/every! 10 2 (bound-fn [] (println "THAT is a thing"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;
 (require 'clojure.java.io)
@@ -28,3 +16,15 @@
     keyword))
 ;;;;;;;;;;;;;;;;;;
 
+
+
+(comment (let [chimes (chime-ch [(-> 2 t/seconds t/from-now)
+                                 (-> 3 t/seconds t/from-now)])]
+           (a/<!! (a/go-loop []
+                    (when-let [msg (a/<! chimes)]
+                      (swap! core/db assoc :last-updated t/now)
+                      (recur)))))
+
+         (chime-ch (take 5 (periodic-seq
+                             (t/now)
+                             (-> 5 t/minutes)))))
